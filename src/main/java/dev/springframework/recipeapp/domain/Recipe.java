@@ -1,5 +1,6 @@
 package dev.springframework.recipeapp.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -36,6 +38,8 @@ public class Recipe {
   private Integer servings;
   private String source;
   private String url;
+
+  @Lob
   private String directions;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")  // Now we want the recipe to own
@@ -45,8 +49,9 @@ public class Recipe {
                                                               // and in this case we want to say
                                                               // the property on the child class.
                                                               // So that's going to be "recipe".
-  private Set<Ingredient> ingredients;
+  private Set<Ingredient> ingredients = new HashSet<>();
 
+  @Lob
   private Byte[] image;
 
   @OneToOne(cascade = CascadeType.ALL)       // Recipe is going to be the owner of this and
@@ -69,7 +74,7 @@ public class Recipe {
   @JoinTable(name = "recipe_category",
       joinColumns = @JoinColumn(name = "recipe_id"),
       inverseJoinColumns = @JoinColumn(name = "category_id"))
-  private Set<Category> categories;
+  private Set<Category> categories = new HashSet<>();
 
   public Long getId() {
     return id;
