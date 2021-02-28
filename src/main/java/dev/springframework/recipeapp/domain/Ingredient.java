@@ -1,7 +1,6 @@
 package dev.springframework.recipeapp.domain;
 
 import java.math.BigDecimal;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,20 +30,19 @@ public class Ingredient {
   private UnitOfMeasure uom;
 
   @ManyToOne                 // To define inverse, we are using the ManyToOne annotation to say
-                             // that it goes back to a recipe and we are not using any cascade
-                             // there because we don't want to have any type of delete operation
-                             // cascade back to the parent object which is recipe.
+  // that it goes back to a recipe and we are not using any cascade
+  // there because we don't want to have any type of delete operation
+  // cascade back to the parent object which is recipe.
   private Recipe recipe;
 
   public Ingredient() {
   }
 
   public Ingredient(String description, BigDecimal amount,
-      UnitOfMeasure uom, Recipe recipe) {
+      UnitOfMeasure uom) {
     this.description = description;
     this.amount = amount;
     this.uom = uom;
-    this.recipe = recipe;
   }
 
   public Long getId() {
